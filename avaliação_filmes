@@ -1,0 +1,26 @@
+import csv
+with open("filmes.csv", newline="", encoding="utf-8") as arquivo:
+    leitor = csv.DictReader(arquivo)
+    filmes = list(leitor)
+avaliacoes = []
+for filme in filmes:
+    while True:
+        try:
+            nota = float(input(f"Digite uma nota (0 a 10) para '{filme['Título']}': "))
+            if 0 <= nota <= 10:
+                avaliacoes.append({
+                    "Ano": filme["Ano"],
+                    "Título": filme["Título"],
+                    "Nota": nota
+                })
+                break
+            else:
+                print("A nota deve estar entre 0 e 10.")
+        except ValueError:
+            print("Digite um número válido.")
+with open("filmes_avaliacao.csv", "w", newline="", encoding="utf-8") as arquivo_saida:
+    campos = ["Ano", "Título", "Nota"]
+    escritor = csv.DictWriter(arquivo_saida, fieldnames=campos)
+    escritor.writeheader()
+    escritor.writerows(avaliacoes)
+print("Arquivo 'filmes_avaliacao.csv' criado com sucesso :) !")
