@@ -1,0 +1,10 @@
+import csv
+with open("filmes_indicacao.csv", newline="", encoding="utf-8") as arquivo:
+    leitor = csv.DictReader(arquivo)
+    filmes = list(leitor)
+for f in filmes:
+    f["Nota"] = float(f["Nota"])
+filmes_ordenados = sorted(filmes, key=lambda x: -x["Nota"])
+print("\n:b TOP FILMES RECOMENDADOS")
+for f in filmes_ordenados:
+    print(f"{f['Título']} ({f['Ano']}) - Nota: {f['Nota']}")
