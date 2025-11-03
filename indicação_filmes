@@ -1,0 +1,14 @@
+import csv
+with open("filmes_avaliacao.csv", newline="", encoding="utf-8") as arquivo:
+    leitor = csv.DictReader(arquivo)
+    filmes = list(leitor)
+for f in filmes:
+    f["Nota"] = float(f["Nota"])
+filmes_ordenados = sorted(filmes, key=lambda x: (-x["Nota"], x["Título"]))
+top5 = filmes_ordenados[:5]
+with open("filmes_indicacao.csv", "w", newline="", encoding="utf-8") as arquivo_saida:
+    campos = ["Ano", "Título", "Nota"]
+    escritor = csv.DictWriter(arquivo_saida, fieldnames=campos)
+    escritor.writeheader()
+    escritor.writerows(top5)
+print("Arquivo 'filmes_indicacao.csv' criado com sucesso :) !")
